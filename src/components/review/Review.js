@@ -8,7 +8,6 @@ import { useParams, useNavigate } from "react-router-dom"
 export default function CreateReview(props) {
     console.log('this is props for the review of sitter', props)
 
-    const [user, setUser] = useState(props.user.id)
     const [singleSitter, setSingleSitter] = useState([])
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(0)
@@ -36,8 +35,8 @@ export default function CreateReview(props) {
 
     const createReview = (e) => {
         e.preventDefault()
-        const sitterReview = { pet_owner:props.user.id, sitter:singleSitter.data.sitter.id, review, rating}
-        console.log('this is sitter review', sitterReview)
+        const sitterReview = { pet_owner:props.user.id, sitter:singleSitter.data.sitter.id, review:review, rating:rating}
+
     
 
         fetch(`http://localhost:8000/reviews`, {
@@ -56,14 +55,10 @@ export default function CreateReview(props) {
         })
 
     }
-
-    const handleReviewData = (data) => {
-        console.log('date data', data)
-        setReview(data)
-    }
     return (
         <>
             <div>
+               
                 <TextInput id="TextInput-25" />
                 <h1>Create a Review</h1>
                 <label htmlFor='name'>Review:</label>

@@ -17,12 +17,13 @@ import axios from 'axios'
 import PetDetail from './components/Profile/PetDetail'
 import AllListings from './screens/AllListings'
 import ListingDetail from './screens/ListingDetail'
-import CreateBooking from './screens/CreateBooking'
 import SitterForm from './components/Profile/SitterForm'
-import Review from './components/review/Review'
+import CreateReview from './components/review/Review'
 import MyBookings from './components/booking/MyBookings'
 import UserReview from './components/Profile/UserReview'
 import Contact from './components/Profile/Contact'
+import ProfilePets from './components/Profile/ProfilePets'
+import PetScreen from './screens/PetScreen'
 
 
 
@@ -84,16 +85,15 @@ const App = () => {
 			<Routes>
 				<Route path='/' element={<HomeScreen msgAlert={msgAlert} allSitters={allSitters} user={user} />} />
 				<Route path='/sitterlistings' element={<AllListings allSitters={allSitters} />} />
-				<Route path='/sitterlisting/:id' element={<ListingDetail allSitters={allSitters} user={user} />} />
-				<Route path='/review/:id' element={<Review allSitters={allSitters} user={user} />} />
-				<Route path='/myreviews/:id' element={<UserReview  user={user} />} />
-				<Route path='/createbooking/:id' element={<CreateBooking allSitters={allSitters} user={user} />} />
+				<Route path='/sitterlisting/:id' element={<ListingDetail allSitters={allSitters} user={user} />}  />
+				<Route path='/review/:id' element={<CreateReview allSitters={allSitters} user={user} />} />
+				<Route path='/myreviews/:id' element={<UserReview  user={user} /> } />
 				<Route path='/mybookings/:id' element={<MyBookings user={user} />} />
 				<Route path='/profile' element={<ProfileScreen user={user} />} />
 				<Route path='/contact/:id' element={<Contact user={user} allSitters={allSitters}/>} />
 				<Route path='/sign-up' element={<SignUp msgAlert={msgAlert} setUser={setUser} />} />
 				<Route path='/sign-in' element={<SignIn msgAlert={msgAlert} setUser={setUser} />} />
-				<Route path='/pets' element={<SignIn msgAlert={msgAlert} setUser={setUser} />} />
+				<Route path='/pets' element={<PetScreen msgAlert={msgAlert} setUser={setUser} />} />
 				<Route path='/pets/:id'element={<PetDetail msgAlert={msgAlert} user={user} />}/>
 				<Route path='/post'element={<SitterForm msgAlert={msgAlert} user={user} />}/>
 		

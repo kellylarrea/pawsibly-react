@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 import { Row, Col, Image, Card, Button } from 'react-bootstrap'
 import './ProfileScreen.css'
 import Footer from "../Footer";
-
+import apiUrl from "../../apiConfig";
 
 
 
 export default function ProfileScreen(props) {
   console.log('user here', props);
   // user data and user pet is called here
-
+  const [image, setImage]= useState();
   const [userPets, setUserPets] = useState([]);
   const [userData, setUserData] = useState([]);
   const [trigger, setTrigger] = useState(false)
@@ -29,8 +29,35 @@ export default function ProfileScreen(props) {
       .catch((err) => console.error(err));
   }, [trigger]);
 
+console.log(userData);
+  const uploadPhoto= (e) => {
 
-    // <ProfilePets myPets={pet} user={props.user} setTrigger={setTrigger}/>
+   
+    const uploadData = new FormData()
+    uploadData.append('image', image)
+    uploadData.append('id', userData.id)
+
+ 
+ 
+     fetch('http://localhost:8000/profileImage', {
+       method: 'POST',
+       headers: {
+      
+         'Authorization': `Token ${props.user.token}`
+       },
+       body: uploadData
+     }).then(res => {
+    
+       console.log('new pehoto added',res);
+       setTrigger(x=> !x)
+     })
+       // useNavigate(-1)
+     .catch(error => {
+       console.log(error);
+     
+     })
+ 
+   }
 
 
   return (
@@ -38,7 +65,11 @@ export default function ProfileScreen(props) {
     <Row>
 <Col md ={3}>
 <Card>
-<Image src = '/cat.png' fluid/>
+<Image src = {apiUrl+userData.image} fluid/>
+<Button variant = 'success' onClick={() => uploadPhoto()}>upload photo</Button>
+<label>
+        <input type="file" onChange={(evt) => setImage(evt.target.files[0])}/>
+      </label>
 </Card>
 </Col>
 
@@ -55,7 +86,7 @@ export default function ProfileScreen(props) {
     </div>
     </Col>
     <Col className="pt-5">
-    <Link  to={`/contact/${props.user.id}`}><Button  variant = 'warning'>My Pets</Button></Link>
+    <Link  to={`/pets/`}><Button  variant = 'warning'>My Pets</Button></Link>
     </Col>
     <Col >
     <i class="fas fa-paw paw fa-10x"></i>
